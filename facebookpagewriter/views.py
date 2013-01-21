@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.conf import settings
 
+
 APP_ID = getattr(settings, 'FB_APP_ID')
 APP_SECRET = getattr(settings, 'FB_APP_SECRET')
 

@@ -5,4 +5,5 @@ class FacebookConfig(models.Model):
     app_secret = models.CharField(max_length=120)
     access_token = models.CharField(max_length=255)
     access_token_expiration = models.PositveField()
+    updated_at = models.DateTimeField()
     
