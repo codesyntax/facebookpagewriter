@@ -10,18 +10,24 @@ APP_ID = getattr(settings, 'FB_APP_ID')
 APP_SECRET = getattr(settings, 'FB_APP_SECRET')
 
 def _mail_admin():
-    send_mail('Update FB token', 'update at domain/%(url)s' % reverse('fblogin'), getattr(settings, 'DEFAULT_FROM_EMAIL', None),
-    [email[1] for email in getattr(settings, 'ADMINS', ((None, None),))], fail_silently=True)
+    send_mail('Update FB token', 'update at domain/%(url)s' % {'url': reverse('fblogin')}, getattr(settings, 'DEFAULT_FROM_EMAIL', None),
+    [email[1] for email in getattr(settings, 'ADMINS', ((None, None),))], fail_silently=False)
 
 
 def _check_expiration(config):
-    update_time = config.updated_at.second
-    now = datetime.datetime.now().second
+    if not config.updated_at:
+        return False
+    try:
+        import pytz
+        now = datetime.datetime.now().replace(tzinfo=pytz.utc)
+    except:
+        now = datetime.datetime.now()
+    update_time = config.updated_at
     expiration = config.access_token_expiration
-    return now - update_time > expiration
+    return (now - update_time).seconds < expiration
 
 def _get_token():
-    conf = FacebookConfig.objects.get(app_id=APP_ID, app_secret=APP_SECRET)
+    conf, created = FacebookConfig.objects.get_or_create(app_id=APP_ID, app_secret=APP_SECRET)
     if _check_expiration(conf):
         return conf.access_token
     else:

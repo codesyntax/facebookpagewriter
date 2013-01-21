@@ -20,6 +20,7 @@ setup(name='facebookpagewriter',
       install_requires=[
           # -*- Extra requirements: -*-
           'facebook-sdk',
+          'pytz',
       ],
       entry_points="""
       # -*- Entry points: -*-
