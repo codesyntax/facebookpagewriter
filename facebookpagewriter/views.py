@@ -26,8 +26,6 @@ def fblogin(request):
         access_token_url = 'https://graph.facebook.com/oauth/access_token?client_id=%(id)s&redirect_uri=http://%(site)s%(url)s&client_secret=%(secret)s&code=%(code)s'%{'id':APP_ID, 'secret':APP_SECRET, 'code':code, 'url': reverse('fblogin'),'site':current_site.domain}
         response = urllib2.urlopen(access_token_url)       
         html = response.read()
-        import pdb;pdb.set_trace()
-        
         parts = html.split('&')
         if len(parts) == 1:
             token = parts[0].split('=')[1]
