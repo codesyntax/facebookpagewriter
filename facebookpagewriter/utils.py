@@ -4,7 +4,7 @@ from models import FacebookConfig
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.contrib.sites.models import get_current_site
+from django.contrib.sites.models import Site
 
 APP_ID = getattr(settings, 'FB_APP_ID')
 APP_SECRET = getattr(settings, 'FB_APP_SECRET')
@@ -26,7 +26,8 @@ def _get_auth(init_token=''):
         graph = facebook.GraphAPI(token)
         return graph
     else:
-        current_site = get_current_site()
+        site_id = getattr(settings, 'SITE_ID',1)
+        current_site = Site.objects.get(id=site_id)
         _mail_admin(u'No active token, please login in http://%(site)s%(url)s' % {'site': current_site.domain, 'url': reverse('fblogin')})
 
 def post(page_id, component, message, **kwargs):
