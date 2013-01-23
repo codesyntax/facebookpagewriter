@@ -1,38 +1,21 @@
 import facebook
-import datetime
 
 from models import FacebookConfig
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.contrib.sites.models import get_current_site
 
 APP_ID = getattr(settings, 'FB_APP_ID')
 APP_SECRET = getattr(settings, 'FB_APP_SECRET')
 
-def _mail_admin():
-    send_mail('Update FB token', 'update at domain/%(url)s' % {'url': reverse('fblogin')}, getattr(settings, 'DEFAULT_FROM_EMAIL', None),
+def _mail_admin(message):
+    send_mail(u'FPW notification', message , getattr(settings, 'DEFAULT_FROM_EMAIL', None),
     [email[1] for email in getattr(settings, 'ADMINS', ((None, None),))], fail_silently=False)
-
-
-def _check_expiration(config):
-    if not config.updated_at:
-        return False
-    try:
-        import pytz
-        now = datetime.datetime.now().replace(tzinfo=pytz.utc)
-    except:
-        now = datetime.datetime.now()
-    update_time = config.updated_at
-    expiration = config.access_token_expiration
-    return (now - update_time).seconds < expiration
 
 def _get_token():
     conf, created = FacebookConfig.objects.get_or_create(app_id=APP_ID, app_secret=APP_SECRET)
-    if _check_expiration(conf):
-        return conf.access_token
-    else:
-        _mail_admin()
-        return None
+    return conf.access_token
 
 def _get_auth(init_token=''):
     if not init_token:
@@ -43,7 +26,8 @@ def _get_auth(init_token=''):
         graph = facebook.GraphAPI(token)
         return graph
     else:
-        return None
+        current_site = get_current_site()
+        _mail_admin(u'No active token, please login in http://%(site)s%(url)s' % {'site': current_site.domain, 'url': reverse('fblogin')})
 
 def post(page_id, component, message, **kwargs):
     graph = _get_auth()
@@ -51,6 +35,8 @@ def post(page_id, component, message, **kwargs):
         page_access_token = graph.get_object(page_id, fields='access_token').get('access_token')
         if page_access_token:
             page_graph = _get_auth(page_access_token)
-            return page_graph.put_object(page_id, component,message=message,**kwargs)
+            result =  page_graph.put_object(page_id, component,message=message,**kwargs)
+            if result.has_key('error'):
+                _mail_admin(result['error']['message'])
     return None
 
