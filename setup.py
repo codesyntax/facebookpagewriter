@@ -3,25 +3,27 @@ import sys, os
 
 version = '0.6'
 
-setup(name='facebookpagewriter',
-      version=version,
-      description="Automate Facebook page posting",
-      long_description="""\
-""",
-      classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-      keywords='facebook page',
-      author='Aitzol Naberan',
-      author_email='anaberan@codesyntax.com',
-      url='http://github.com/codesyntax/facebookpagewriter',
-      license='GPL',
-      packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-      include_package_data=True,
-      zip_safe=False,
-      install_requires=[
-          # -*- Extra requirements: -*-
-          'facebook-sdk',
-      ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
-      )
+setup(
+    name='facebookpagewriter',
+    version=version,
+    description='Automate Facebook page posting',
+    long_description="",
+    author='Aitzol Naberan',
+    author_email='anaberan@codesyntax.com',
+    url='http://github.com/codesyntax/facebookpagewriter',
+    package_dir={'facebookpagewriter': 'facebookpagewriter'},
+    packages=find_packages(exclude=['ez_setup','examples','tests']),
+    include_package_data=True,
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Framework :: Django',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities'
+    ],
+)
