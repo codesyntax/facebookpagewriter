@@ -1,5 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from facebookpagewriter import views
 
-urlpatterns = patterns('',
-                       url(r'', 'facebookpagewriter.views.fblogin', name='fblogin'),
-                       )                      
+urlpatterns = [
+    url(r'', views.fblogin, name='fblogin'),
+]

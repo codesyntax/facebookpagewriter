@@ -14,6 +14,7 @@ setup(
     package_dir={'facebookpagewriter': 'facebookpagewriter'},
     packages=find_packages(exclude=['ez_setup','examples','tests']),
     include_package_data=True,
+    requires=['django(>=1.10)'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
