@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
-from facebook import get_access_token_from_code
+from facebook import GraphAPI
 from facebookpagewriter.models import FacebookConfig
 
 APP_ID = getattr(settings, 'FB_APP_ID')
@@ -21,7 +21,7 @@ def fblogin(request):
         return HttpResponseRedirect(dialog_url)
     else:
         code = request.GET['code']
-        result = get_access_token_from_code(code, 'http://%(site)s%(url)s' % {'site': current_site.domain, 'url': reverse('fblogin')}, APP_ID, APP_SECRET)
+        result = GraphAPI.get_access_token_from_code(code, 'http://%(site)s%(url)s' % {'site': current_site.domain, 'url': reverse('fblogin')}, APP_ID, APP_SECRET)
         token = result.get('access_token','')
         config, created = FacebookConfig.objects.get_or_create(app_id=APP_ID,app_secret=APP_SECRET)
         config.access_token = token
