@@ -25,8 +25,6 @@ if django.VERSION < (1, 10):
             'django.contrib.sessions',
             'django.contrib.admin',
             'django.contrib.sites',
-            'photologue',
-            'tinymce',
             APP_NAME,
         ),
         TEMPLATE_CONTEXT_PROCESSORS=(

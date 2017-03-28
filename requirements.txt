@@ -1,2 +1,1 @@
 Django >= 1.8
-django-photologue >= 3.6

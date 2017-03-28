@@ -15,7 +15,7 @@ Facebook Page Writer
     :target: https://badge.fury.io/py/facebookpagewriter
     :alt: Latest Python 2 version
 
-.. image:: https://img.shields.io/badge/python-3.5-blue.svg
+.. image:: https://img.shields.io/badge/python-3.6-blue.svg
     :target: https://badge.fury.io/py/facebookpagewriter
     :alt: Latest Python 3 version
 
