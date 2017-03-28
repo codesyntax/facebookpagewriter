@@ -8,7 +8,7 @@ from django.test.utils import get_runner
 
 APP_NAME = 'facebookpagewriter'
 
-settings.configure(
+DEFAULT_SETTINGS = dict(
     DEBUG=True,
     DATABASES={
         'default': {
@@ -29,7 +29,7 @@ settings.configure(
 )
 
 if django.VERSION < (1, 10):
-    settings.configure(
+    DEFAULT_SETTINGS.update(
         TEMPLATE_CONTEXT_PROCESSORS=(
             "django.contrib.auth.context_processors.auth",
             "django.core.context_processors.debug",
@@ -48,7 +48,7 @@ if django.VERSION < (1, 10):
         )
     )
 else:
-    settings.configure(
+    DEFAULT_SETTINGS.update(
         TEMPLATES=[
             {
                 'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -84,6 +84,8 @@ else:
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
         ]
     )
+
+settings.configure(**DEFAULT_SETTINGS)
 
 if hasattr(django, 'setup'):
     django.setup()
