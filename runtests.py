@@ -8,25 +8,28 @@ from django.test.utils import get_runner
 
 APP_NAME = 'facebookpagewriter'
 
+settings.configure(
+    DEBUG=True,
+    DATABASES={
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+        }
+    },
+    USE_TZ=True,
+    ROOT_URLCONF='{0}.urls'.format(APP_NAME),
+    SITE_ID=1,
+    INSTALLED_APPS=(
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.admin',
+        'django.contrib.sites',
+        APP_NAME,
+    )
+)
+
 if django.VERSION < (1, 10):
     settings.configure(
-        DEBUG=True,
-        DATABASES={
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-            }
-        },
-        USE_TZ=True,
-        ROOT_URLCONF='{0}.urls'.format(APP_NAME),
-        SITE_ID=1,
-        INSTALLED_APPS=(
-            'django.contrib.auth',
-            'django.contrib.contenttypes',
-            'django.contrib.sessions',
-            'django.contrib.admin',
-            'django.contrib.sites',
-            APP_NAME,
-        ),
         TEMPLATE_CONTEXT_PROCESSORS=(
             "django.contrib.auth.context_processors.auth",
             "django.core.context_processors.debug",
