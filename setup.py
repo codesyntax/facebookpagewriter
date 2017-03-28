@@ -1,5 +1,17 @@
+import uuid
 from setuptools import setup, find_packages
-import sys, os
+from pip.req import parse_requirements
+
+
+def get_requirements(source):
+
+    try:
+        install_reqs = parse_requirements(source, session=uuid.uuid1())
+    except TypeError:
+        # Older version of pip.
+        install_reqs = parse_requirements(source)
+    required = set([str(ir.req) for ir in install_reqs])
+    return required
 
 version = '0.9.dev0'
 
@@ -12,9 +24,9 @@ setup(
     author_email='anaberan@codesyntax.com',
     url='http://github.com/codesyntax/facebookpagewriter',
     package_dir={'facebookpagewriter': 'facebookpagewriter'},
-    packages=find_packages(exclude=['ez_setup','examples','tests']),
+    packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     include_package_data=True,
-    requires=['django(>=1.10)'],
+    install_requires=get_requirements('requirements.txt'),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
