@@ -24,6 +24,7 @@ DEFAULT_SETTINGS = dict(
         'django.contrib.sessions',
         'django.contrib.admin',
         'django.contrib.sites',
+        'django.contrib.messages',
         APP_NAME,
     ),
     FB_APP_ID='123456',
@@ -38,6 +39,7 @@ if django.VERSION < (1, 10):
             "django.core.context_processors.i18n",
             "django.core.context_processors.media",
             "django.core.context_processors.request",
+            "django.contrib.messages.context_processors.messages",
         ),
         MIDDLEWARE_CLASSES=(
             'django.middleware.security.SecurityMiddleware',
