@@ -1,9 +1,9 @@
 import facebook
 
-from models import FacebookConfig
+from .models import FacebookConfig
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.sites.models import Site
 
 APP_ID = getattr(settings, 'FB_APP_ID')
@@ -40,4 +40,3 @@ def post(page_id, component, message, **kwargs):
             if result.has_key('error'):
                 _mail_admin(result['error']['message'])
     return None
-
