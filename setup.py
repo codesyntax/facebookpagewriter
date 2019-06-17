@@ -15,7 +15,7 @@ def get_requirements(source):
     required = sorted(set([str(ir.req) for ir in install_reqs]))
     return list(required)
 
-version = '0.10.dev0'
+version = '0.10'
 
 setup(
     name='facebookpagewriter',
