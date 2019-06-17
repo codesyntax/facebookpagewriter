@@ -25,7 +25,7 @@ DEFAULT_SETTINGS = dict(
         'django.contrib.admin',
         'django.contrib.sites',
         APP_NAME,
-    )
+    ),
     FB_APP_ID='123456',
 )
 
