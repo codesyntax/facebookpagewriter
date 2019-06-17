@@ -26,6 +26,7 @@ DEFAULT_SETTINGS = dict(
         'django.contrib.sites',
         APP_NAME,
     )
+    FB_APP_ID='123456',
 )
 
 if django.VERSION < (1, 10):
