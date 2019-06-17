@@ -27,6 +27,7 @@ DEFAULT_SETTINGS = dict(
         APP_NAME,
     ),
     FB_APP_ID='123456',
+    FB_APP_SECRET='secret',
 )
 
 if django.VERSION < (1, 10):
