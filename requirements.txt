@@ -1,1 +1,2 @@
 Django >= 1.11.15
+facebook-sdk >= 3.1.0 
